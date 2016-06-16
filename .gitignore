@@ -1,0 +1,6 @@
+# ignore cached stuff
+*.pyc
+__pycache__/
+
+# ignore local copies of arhives
+*.{tar,gz,gzip,bz,bzip2,bz2,xz}
