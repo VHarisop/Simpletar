@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 
 # This file is part of Simpletar.
-# 
+#
 # Simpletar is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # Simpletar is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with Simpletar.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -52,6 +52,12 @@ def get_type_by_ext(filename):
     -------
     str
         The associated archive type.
+
+    Raises
+    ------
+    ValueError
+        If the filename argument does not contain a known
+        archive file extension.
     """
     # isolate the extension
     ext = os.path.splitext(filename)[-1]
@@ -90,9 +96,9 @@ def is_tar_file(filename):
         If the filename argument points to a file that does not exists.
     """
     try:
-        with open(filename, 'rb') as f:
-            f.read(257) # TAR files's magic numbers have an offset of 257
-            return f.read(len(MAGIC['tar'])) == MAGIC['tar']
+        with open(filename, 'rb') as ar_file:
+            ar_file.read(257) # TAR files's magic numbers have an offset of 257
+            return ar_file.read(len(MAGIC['tar'])) == MAGIC['tar']
     except FileNotFoundError:
         raise ValueError("File %s not found" % filename)
 
@@ -123,8 +129,8 @@ def get_type_by_header(filename):
     else:
         max_len = max(len(i) for i in MAGIC.values())
         try:
-            with open(filename, 'rb') as f:
-                cont = f.read(max_len)
+            with open(filename, 'rb') as ar_file:
+                cont = ar_file.read(max_len)
         except FileNotFoundError:
             raise ValueError("File %s not found" % filename)
 
@@ -242,7 +248,7 @@ def create_gzip_file(name, *args):
     subprocess.call(['tar', '-cvzf', name] + list(args))
 
 
-def extract_gzip_file(name, *args):
+def extract_gzip_file(name):
     """
     Extracts files from a tar.gz archive using "tar -xvzf".
 
@@ -269,7 +275,7 @@ def create_bzip_file(name, *args):
     subprocess.call(['tar', '-cvjf', name] + list(args))
 
 
-def extract_bzip_file(name, *args):
+def extract_bzip_file(name):
     """
     Extracts files from a tar.bz2 archive using "tar -xvjf".
 
@@ -296,7 +302,7 @@ def create_xz_file(name, *args):
     subprocess.call(['tar', '-cvJf', name] + list(args))
 
 
-def extract_xz_file(name, *args):
+def extract_xz_file(name):
     """
     Extracts a .tar.xz archive using "tar -xvJf".
 

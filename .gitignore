@@ -4,3 +4,8 @@ __pycache__/
 
 # ignore local copies of arhives
 *.{tar,gz,gzip,bz,bzip2,bz2,xz}
+
+# ignore local build files
+build/
+dist/
+*.egg-info/
