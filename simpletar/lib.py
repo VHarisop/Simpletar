@@ -15,7 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Simpletar.  If not, see <http://www.gnu.org/licenses/>.
 
-import os, subprocess
+import os
+import subprocess
 
 """
 simpletar.lib -- Contains most utility methods needed for simpletar.
@@ -97,7 +98,7 @@ def is_tar_file(filename):
     """
     try:
         with open(filename, 'rb') as ar_file:
-            ar_file.read(257) # TAR files's magic numbers have an offset of 257
+            ar_file.read(257)  # TAR file magic numbers have an offset of 257
             return ar_file.read(len(MAGIC['tar'])) == MAGIC['tar']
     except FileNotFoundError:
         raise ValueError("File %s not found" % filename)
@@ -143,6 +144,7 @@ def get_type_by_header(filename):
         raise ValueError('File %s is not a file of either tar, gzip, '
                          'bzip2 or XZ format')
 
+
 def suffixes(filetype):
     """
     Returns a list of commonly used suffixes for a given filetype,
@@ -176,7 +178,6 @@ def list_files(name):
 def delete_files(name, *args):
     """
     Delete a set of files from an archive.
-    
     Note: file deletion works only with uncompressed archives
 
     Parameters

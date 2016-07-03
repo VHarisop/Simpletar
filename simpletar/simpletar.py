@@ -16,7 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Simpletar.  If not, see <http://www.gnu.org/licenses/>.
 
-import argparse, sys
+import argparse
+import sys
 
 from simpletar.lib import (
     create_tar_file, extract_tar_file, create_gzip_file, extract_gzip_file,
@@ -25,11 +26,12 @@ from simpletar.lib import (
     get_type_by_ext
 )
 
+
 def main():
     parser = argparse.ArgumentParser(
-        description = 'A utility that simplifies archive file manipulation '
-                      'by trying to determine archive type using filenames '
-                      'and/or header "magic bytes".'
+        description='A utility that simplifies archive file manipulation '
+                    'by trying to determine archive type using filenames '
+                    'and/or header "magic bytes".'
     )
 
     # add a group of mutually exclusive opts:
@@ -91,7 +93,6 @@ def main():
     # retrieve archive name and filenames
     archive_name = args['archive'][0]
     files = args['files']
-
 
     if args['create']:
         # try to determine file type by filename if the user
